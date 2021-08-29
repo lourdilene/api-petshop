@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  api-petshop:
+    image: paulomarcio/php-fpm-7.3
+    container_name: petshop
+    working_dir: /var/www/
+    volumes:
+      - /home/lu/git/api-petshop:/var/www
+    networks:
+      - petshop
+    depends_on:
+      - nginx
+      - mysql
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: petshop-nginx
+    ports:
+      - "${PORT}:80"
+    volumes:
+      - /home/lu/git/api-petshop:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - petshop
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - petshop
+networks:
+  petshop:
+    name: petshop
+    driver: bridge

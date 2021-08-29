@@ -16,3 +16,13 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->group(['prefix' => 'pets'], function() use ($router){
+        $router->post('','PetController@store');
+        $router->get('','PetController@index');
+        $router->get('{id}','PetController@show');
+        $router->put('{id}','PetController@update');
+        $router->delete('{id}','PetController@destroy');
+    });
+});
