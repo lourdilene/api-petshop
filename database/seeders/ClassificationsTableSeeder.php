@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Classification;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class ClassificationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('ClassificationsTableSeeder');
-        $this->call('OwnersTableSeeder');
+        Classification::create([
+            'description' => 'cachorro'
+        ]);
     }
 }
